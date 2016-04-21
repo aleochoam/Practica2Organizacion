@@ -25,8 +25,32 @@ float pDivision(float a, float b) {
 	}
 }
 
+float pMultiplicacion(float a, float b) {
+	float res;
+	__asm {
+		fld a;
+		fld b;
+		fmul st(0), st(1);
+		fstp res;
+	}
+	return res;
+}
+
+float pResta(float a,float b) {
+	float res;
+	__asm {
+		fld a;
+		fld b;
+		fsub st(0), st(1);
+		fstp res;
+	}
+	return res;
+
+}
+
+
 int main() {
-	double res = pSuma(3.4, 0.6);
+	double res = pMultiplicacion(5.0, 3.0);
 	cout << res << endl;
 	system("pause");
 	return 0;
