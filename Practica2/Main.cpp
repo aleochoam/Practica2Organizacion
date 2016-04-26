@@ -58,20 +58,21 @@ float pResta(float a,float b) {
 }
 
 float** sumarMatrices(float** a, float** b) {
-	int contadorE;
-	int contadorI;
 	__asm {
-		mov ecx, 4;
-		mov contadorE, 0;
+		mov eax, 0;
 	inicioCicloExterno:
-		mov contadorI, 0;
+		mov ebx, 0;
 	inicioCicloInterno:
 		//suma
 
-		inc contadorI;
-		cmp contadorI, ecx;
+		inc ebx;
+		cmp ebx, 4;
 		jne inicioCicloInterno;
-		jmp inicioCicloExterno;
+		inc eax;
+		cmp eax, 4;
+		jne inicioCicloExterno;
+
+		//termina el ciclo
 	}
 }
 
@@ -102,6 +103,8 @@ int main() {
 	cout << "Que operacion desea realizar?" << endl;
 	cout << " 1 Suma\n 2 Resta\n 3 Multiplicacion\n 4 Division" << endl;
 
+	sumarMatrices(NULL, NULL);
+
 	int operacion;
 	cin >> operacion;
 
@@ -115,26 +118,83 @@ int main() {
 		je multiplicar;
 		cmp eax, 4;
 		je dividir;
-	sumar:
-	}
-	cout << "Se va a sumar" << endl;
-	goto terminar;
-	__asm {
-	restar:
-	}
-	cout << "Se va a restar" << endl;
-	goto terminar;
-	__asm {
-	multiplicar:
-	}
-	cout << "se va a multiplicar" << endl;
-	goto terminar;
-	__asm {
-	dividir:
-	}
-	cout << "Se va a dividir" << endl;	
 
-terminar:
+	sumar:
+
+		mov eax, 0;
+	inicioCicloExternoS:
+		mov ebx, 0;
+	inicioCicloInternoS:
+		//suma
+
+		inc ebx;
+		cmp ebx, 4;
+		jne inicioCicloInternoS;
+		inc eax;
+		cmp eax, 4;
+		jne inicioCicloExternoS;
+
+		//termina el ciclo
+		jmp terminar;
+	
+
+	restar:
+	
+		mov eax, 0;
+	inicioCicloExternoR:
+		mov ebx, 0;
+	inicioCicloInternoR:
+		//suma
+
+		inc ebx;
+		cmp ebx, 4;
+		jne inicioCicloInternoR;
+		inc eax;
+		cmp eax, 4;
+		jne inicioCicloExternoR;
+
+		//termina el ciclo
+		jmp terminar;
+
+	multiplicar:
+
+		mov eax, 0;
+	inicioCicloExternoM:
+		mov ebx, 0;
+	inicioCicloInternoM:
+		//suma
+
+		inc ebx;
+		cmp ebx, 4;
+		jne inicioCicloInternoM;
+		inc eax;
+		cmp eax, 4;
+		jne inicioCicloExternoM;
+
+		//termina el ciclo
+		jmp terminar;
+
+	dividir:
+
+		mov eax, 0;
+	inicioCicloExternoD:
+		mov ebx, 0;
+	inicioCicloInternoD:
+		//suma
+
+		inc ebx;
+		cmp ebx, 4;
+		jne inicioCicloInternoD;
+		inc eax;
+		cmp eax, 4;
+		jne inicioCicloExternoD;
+
+		//termina el ciclo
+		jmp terminar;
+
+	terminar:
+	}
+	
 	cout << "Borrando memoria" << endl;
 	
 	for (size_t i = 0; i < n; i++) {
