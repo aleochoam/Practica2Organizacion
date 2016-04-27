@@ -103,8 +103,6 @@ int main() {
 	cout << "Que operacion desea realizar?" << endl;
 	cout << " 1 Suma\n 2 Resta\n 3 Multiplicacion\n 4 Division" << endl;
 
-	sumarMatrices(NULL, NULL);
-
 	int operacion;
 	cin >> operacion;
 
@@ -194,9 +192,16 @@ int main() {
 
 	terminar:
 	}
+
+	//Imprimiendo la matriz
+	for (size_t i = 0; i < n; i++){
+		for (size_t j = 0; j < n; j++){
+			cout << A[i][j] << ", ";
+		}
+		cout << endl;
+	}
 	
-	cout << "Borrando memoria" << endl;
-	
+	//Limpiando la memoria
 	for (size_t i = 0; i < n; i++) {
 		delete[] A[i];
 		delete[] B[i];
