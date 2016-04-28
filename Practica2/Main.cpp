@@ -4,12 +4,16 @@
 #include <iostream>
 using namespace std;
 
+float A[4][4];
+float B[4][4];
+float C[4][4];
+
 float pSuma(float a, float b);
 float pResta(float a, float b);
 float pMultiplicacion(float a, float b);
 float pDivision(float a, float b);
 
-float** crearMatriz();
+void iniciarMatrices();
 
 float pSuma(float a, float b) {
 	float res;
@@ -18,6 +22,7 @@ float pSuma(float a, float b) {
 		fld b;
 		fadd st(0), st(1);
 		fstp res;
+		fstp st(0);
 	}
 	return res;
 }
@@ -30,6 +35,7 @@ float pDivision(float a, float b) {
 		fld b;
 		fdiv;
 		fstp res;
+		fstp st(0);
 	}
 	return res;
 }
@@ -41,6 +47,7 @@ float pMultiplicacion(float a, float b) {
 		fld b;
 		fmul st(0), st(1);
 		fstp res;
+		fstp st(0);
 	}
 	return res;
 }
@@ -48,62 +55,49 @@ float pMultiplicacion(float a, float b) {
 float pResta(float a,float b) {
 	float res;
 	__asm {
-		fld b;
 		fld a;
+		fld b;
 		fsub st(0), st(1);
 		fstp res;
+		fstp st(0);
 	}
 	return res;
-
 }
 
-float** sumarMatrices(float** a, float** b) {
-	__asm {
-		mov eax, 0;
-	inicioCicloExterno:
-		mov ebx, 0;
-	inicioCicloInterno:
-		//suma
 
-		inc ebx;
-		cmp ebx, 4;
-		jne inicioCicloInterno;
-		inc eax;
-		cmp eax, 4;
-		jne inicioCicloExterno;
-
-		//termina el ciclo
-	}
-}
-
-float** crearMatriz() {
-	const int tam = 4;
-	
-	float** matrix = 0;
-	matrix = new float*[tam];
-	for (size_t i = 0; i < tam; i++) {
-		matrix[i] = new float[tam];
+void iniciarMatrices() {
+	cout << "Ingrese la matriz A" << endl;
+	for (size_t i = 0; i < 4; i++) {
 		cout << "Fila " << i << " ";
-		for (size_t j = 0; j < tam; j++) {
-			cout << "Columna " << j  << endl;
-			cin >> matrix[i][j];
+		for (size_t j = 0; j < 4; j++) {
+			cout << "Columna " << j << endl;
+			cin >> A[i][j];
 		}
 	}
-	return matrix;
+
+	cout << "Ingrese la matriz B" << endl;
+	for (size_t i = 0; i < 4; i++) {
+		cout << "Fila " << i << " ";
+		for (size_t j = 0; j < 4; j++) {
+			cout << "Columna " << j << endl;
+			cin >> B[i][j];
+		}
+	}
 }
+
 
 
 int main() {
 	const int n = 4;
-	cout << "Ingrese la matriz A" << endl;
-	float** A = crearMatriz();
-	cout << "Ingrese la matriz B" << endl;
-	float** B = crearMatriz();
+	const int m = 16;
+	int operacion;
+	int p = 0;
+
+	iniciarMatrices();
 
 	cout << "Que operacion desea realizar?" << endl;
 	cout << " 1 Suma\n 2 Resta\n 3 Multiplicacion\n 4 Division" << endl;
 
-	int operacion;
 	cin >> operacion;
 
 	__asm {
@@ -119,98 +113,89 @@ int main() {
 
 	sumar:
 
-		mov eax, 0;
-	inicioCicloExternoS:
-		mov ebx, 0;
-	inicioCicloInternoS:
-		//suma
-
-		inc ebx;
-		cmp ebx, 4;
-		jne inicioCicloInternoS;
-		inc eax;
-		cmp eax, 4;
-		jne inicioCicloExternoS;
-
-		//termina el ciclo
+		mov ecx, 0
+	inicioCicloS:
+		mov eax, A[ecx * type float];
+		push eax;
+		mov eax, B[ecx * type float];
+		push eax;
+		call pSuma;
+		mov ecx, p
+		fstp C[ecx * type float];
+		pop eax;
+		pop eax;
+		
+		inc p;
+		cmp ecx, m;
+		jne inicioCicloS;
 		jmp terminar;
-	
-
+		
 	restar:
-	
-		mov eax, 0;
-	inicioCicloExternoR:
-		mov ebx, 0;
-	inicioCicloInternoR:
-		//suma
 
-		inc ebx;
-		cmp ebx, 4;
-		jne inicioCicloInternoR;
-		inc eax;
-		cmp eax, 4;
-		jne inicioCicloExternoR;
+		mov ecx, 0
+	inicioCicloR:
+		mov eax, A[ecx * type float];
+		push eax;
+		mov eax, B[ecx * type float];
+		push eax;
+		call pResta;
+		mov ecx, p
+		fstp C[ecx * type float];
+		pop eax;
+		pop eax;
 
-		//termina el ciclo
+		inc p;
+		cmp ecx, m;
+		jne inicioCicloR;
 		jmp terminar;
 
 	multiplicar:
 
-		mov eax, 0;
-	inicioCicloExternoM:
-		mov ebx, 0;
-	inicioCicloInternoM:
-		//suma
+		mov ecx, 0
+	inicioCicloM:
+		mov eax, A[ecx * type float];
+		push eax;
+		mov eax, B[ecx * type float];
+		push eax;
+		mov ecx, p
+		fstp C[ecx * type float];
+		pop eax;
+		pop eax;
 
-		inc ebx;
-		cmp ebx, 4;
-		jne inicioCicloInternoM;
-		inc eax;
-		cmp eax, 4;
-		jne inicioCicloExternoM;
-
-		//termina el ciclo
+		inc p;
+		cmp ecx, m;
+		jne inicioCicloM;
 		jmp terminar;
 
 	dividir:
 
-		mov eax, 0;
-	inicioCicloExternoD:
-		mov ebx, 0;
-	inicioCicloInternoD:
-		//suma
+		mov ecx, 0
+	inicioCicloD:
+		mov eax, A[ecx * type float];
+		push eax;
+		mov eax, B[ecx * type float];
+		push eax;
+		call pDivision;
+		mov ecx, p
+		fstp C[ecx * type float];
+		pop eax;
+		pop eax;
 
-		inc ebx;
-		cmp ebx, 4;
-		jne inicioCicloInternoD;
-		inc eax;
-		cmp eax, 4;
-		jne inicioCicloExternoD;
-
-		//termina el ciclo
+		inc p;
+		cmp ecx, m;
+		jne inicioCicloD;
 		jmp terminar;
 
 	terminar:
 	}
-
+	
 	//Imprimiendo la matriz
 	for (size_t i = 0; i < n; i++){
 		for (size_t j = 0; j < n; j++){
-			cout << A[i][j] << ", ";
+			cout << C[i][j] << ", ";
 		}
 		cout << endl;
 	}
-	
-	//Limpiando la memoria
-	for (size_t i = 0; i < n; i++) {
-		delete[] A[i];
-		delete[] B[i];
-	}
-	delete[] A;
-	delete[] B;
-	A = 0;
-	B = 0;
-	
 	system("pause");
 	return 0;
 }
