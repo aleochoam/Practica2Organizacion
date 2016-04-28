@@ -118,20 +118,92 @@ int main() {
 
 	//iniciarMatrices();
 
-	imprimirMenu();
-	
+	cout << "Que operacion desea realizar?" << endl;
+	cout << " -1 Suma\n -2 Resta\n -3 Multiplicacion\n -4 Division/n -5 Cerrar el programa" << endl;
+	cin >> operacion;
+
+
 
 
 	__asm {
 		mov eax, operacion;
 		cmp eax, 1;
+		je menuSuma;
+		cmp eax, 2;
+		je menuResta;
+		cmp eax, 3;
+		je menuMultiplicar;
+		cmp eax, 4;
+		je menuDividir;
+
+	menuSuma:
+
+	}
+	cout << " -1 Llenar Matrices\n -2 Realizar Operacion\n -3 Cancelar" << endl;
+	cin >> operacion;
+	__asm {
+		mov eax, operacion;
+		comp eax, 1;
+		je llenarMatriz;
+		comp eax, 2;
 		je sumar;
+		comp eax, 3;
+		je hlt;
+
+		llenar Matriz :
+
+	}
+	iniciarMatrices();
+
+
+	__asm {
+
+	menuResta:
+
+	}
+
+	cout << " -1 Llenar Matrices\n -2 Realizar Operacion\n -3 Cancelar" << endl;
+	cin >> operacion;
+
+	__asm {
+		mov eax, operacion;
+		cmp eax, 1;
+		je llenarMatriz;
 		cmp eax, 2;
 		je restar;
 		cmp eax, 3;
+		je hlt;
+
+	menuMultiplicar:
+	}
+	cout << " -1 Llenar Matrices\n -2 Realizar Operacion\n -3 Cancelar" << endl;
+	cin >> operacion;
+
+	__asm {
+
+		mov eax, operacion;
+		cmp eax, 1;
+		je llenarMatriz;
+		cmp eax, 2;
 		je multiplicar;
-		cmp eax, 4;
+		cmp eax, 3;
+		je hlt;
+
+	menuDivision:
+
+	}
+	cout << " -1 Llenar Matrices\n -2 Realizar Operacion\n -3 Cancelar" << endl;
+	cin >> operacion;
+
+	__asm{
+		
+		mov eax, operacion;
+		cmp eax, 1;
+		je llenarMatriz;
+		cmp eax, 2;
 		je dividir;
+		cmp eax, 3;
+		je hlt;
 
 	sumar:
 
@@ -233,134 +305,6 @@ void imprimirMatriz(float M[4][4]) {
 	}
 
 }
-void imprimirMenu() {
-	int operacion;
-	cout << "Que operacion desea realizar?" << endl;
-	cout << " -1 Suma\n -2 Resta\n -3 Multiplicacion\n -4 Division/n -5 Cerrar el programa" << endl;
-	cin >> operacion;
 
-	switch (operacion) {
-
-	case 1: 
-		menuSuma();
-		break;
-	case 2: 
-		menuResta();
-		break;
-	case 3:
-		menuMultiplicacion();
-		break;
-	case 4:
-		menuDivision();
-		break;
-	case 5: break;
-	}
-}
-
-
-void menuSuma() {
-	int menSum;
-	cout << " -1 Ingresar Matrices\n -2 Mostrar Matriz A\n -3 Mostrar Matriz B\n -4 Realizar operacion\n -5 Mostrar Resultado" << endl;
-	cin >> menSum;
-	switch (menSum){
-	case 1: 
-		iniciarMatrices();
-		break;
-	case 2: 
-		imprimirMatriz(A);
-		break;
-	case 3: 
-		imprimirMatriz(B);
-		break;
-	case 4:
-		// Aquí pongo el metodo de sumar Matrices;
-		break;
-	case 5: 
-		imprimirMatriz(C);
-		break;
-
-
-	}
-
-}
-
-void menuResta() {
-	int menRes;
-	cout << " -1 Ingresar Matrices\n -2 Mostrar Matriz A\n -3 Mostrar Matriz B\n -4 Realizar operacion\n -5 Mostrar Resultado" << endl;
-	cin >> menRes;
-	switch (menRes) {
-	case 1:
-		iniciarMatrices();
-		break;
-	case 2:
-		imprimirMatriz(A);
-		break;
-	case 3:
-		imprimirMatriz(B);
-		break;
-	case 4:
-		// Aquí pongo el metodo de Restar Matrices;
-		break;
-	case 5:
-		imprimirMatriz(C);
-		break;
-
-
-	}
-
-}
-
-
-void menuMultiplicacion() {
-	int menMult;
-	cout << " -1 Ingresar Matrices\n -2 Mostrar Matriz A\n -3 Mostrar Matriz B\n -4 Realizar operacion\n -5 Mostrar Resultado" << endl;
-	cin >> menMult;
-	switch (menMult) {
-	case 1:
-		iniciarMatrices();
-		break;
-	case 2:
-		imprimirMatriz(A);
-		break;
-	case 3:
-		imprimirMatriz(B);
-		break;
-	case 4:
-		// Aquí pongo el metodo de multiplicar Matrices;
-		break;
-	case 5:
-		imprimirMatriz(C);
-		break;
-
-
-	}
-
-}
-
-void menuDivision() {
-	int menDiv;
-	cout << " -1 Ingresar Matrices\n -2 Mostrar Matriz A\n -3 Mostrar Matriz B\n -4 Realizar operacion\n -5 Mostrar Resultado" << endl;
-	cin >> menDiv;
-	switch (menDiv) {
-	case 1:
-		iniciarMatrices();
-		break;
-	case 2:
-		imprimirMatriz(A);
-		break;
-	case 3:
-		imprimirMatriz(B);
-		break;
-	case 4:
-		// Aquí pongo el metodo de Dividir Matrices;
-		break;
-	case 5:
-		imprimirMatriz(C);
-		break;
-
-
-	}
-
-}
 
 
