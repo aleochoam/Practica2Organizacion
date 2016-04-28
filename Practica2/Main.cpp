@@ -96,9 +96,9 @@ int main() {
 	iniciarMatrices();
 
 	cout << "Que operacion desea realizar?" << endl;
-	cout << " 1 Suma\n 2 Resta\n 3 Multiplicacion\n 4 Division" << endl;
-
+	cout << " -1 Suma\n -2 Resta\n -3 Multiplicacion\n -4 Division" << endl;
 	cin >> operacion;
+
 
 	__asm {
 		mov eax, operacion;
