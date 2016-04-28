@@ -31,18 +31,34 @@ float pSuma(float a, float b) {
 		fstp res;
 		fstp st(0);
 	}
+
 	return res;
 }
 
 
 float pDivision(float a, float b) {
 	float res;
+	int zero = 0;
 	__asm {
 		fld a;
-		fld b;
+		fld b; 
+		mov eax, b;
+		cmp eax, zero;
+		je Error;
 		fdiv;
 		fstp res;
 		fstp st(0);
+		jmp Bueno;
+	Error:
+		
+	}
+	cout << "Error. Division por cero :o" << endl;
+	system("pause");
+	exit(-1);
+	__asm {
+		
+	Bueno:
+
 	}
 	return res;
 }
@@ -204,6 +220,7 @@ int main() {
 	}
 	system("pause");
 	return 0;
+}
 
 void imprimirMatriz(float M[4][4]) {
 	int n = 4;
