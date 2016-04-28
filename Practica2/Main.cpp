@@ -262,19 +262,20 @@ int main() {
 	multiplicar:
 
 		mov ecx, 0
-			inicioCicloM :
-			mov eax, A[ecx * type float];
+	inicioCicloM:
+		mov eax, A[ecx * type float];
 		push eax;
 		mov eax, B[ecx * type float];
 		push eax;
+		call pMultiplicacion;
 		mov ecx, p
-			fstp C[ecx * type float];
+		fstp C[ecx * type float];
 		pop eax;
 		pop eax;
 
 		inc p;
 		cmp ecx, m;
-		jne inicioCicloM;
+		jne inicioCicloS;
 		mov p, 0;
 		jmp terminar;
 
