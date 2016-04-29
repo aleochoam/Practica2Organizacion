@@ -19,11 +19,12 @@ void iniciarMatrices();
 float pSuma(float a, float b) {
 	float res;
 	__asm {
+		ffree st(0);
 		fld a;
 		fld b;
 		fadd st(0), st(1);
 		fstp res;
-		fstp st(0);
+		fstp st(1);
 	}
 
 	return res;
@@ -45,11 +46,10 @@ float pDivision(float a, float b) {
 		jmp Bueno;
 	Error:
 	}
-	//exit(-1);
+	
 	cout << "Error. Division por cero, reinicie las matrices" << endl;
 	iniciarMatrices();
 	__asm {
-		//jmp MenuPrincipal;
 	Bueno:
 	}
 	return res;
@@ -124,7 +124,7 @@ int main() {
 	__asm {
 	MenuPrincipal:
 	}
-
+	system("cls");
 	cout << "Que operacion desea realizar?" << endl;
 	cout << " -1 Suma\n -2 Resta\n -3 Multiplicacion\n -4 Division\n -5 Mostrar Matriz A\n -6 Mostrar Matriz B\n -7 Mostrar Matriz Resultante\n -8 Reiniciar Matrices\n -9 Cerrar el programa" << endl;
 	cin >> operacion;
@@ -153,27 +153,32 @@ int main() {
 
 	MostrarA:
 	}
+	system("cls");
 	cout << "Matriz A" << endl;
 	imprimirMatriz(A);
-
+	system("pause");
 
 	__asm {
 		jmp MenuPrincipal;
 	MostrarB:
 	}
+	system("cls");
 	cout << "Matriz B" << endl;
 	imprimirMatriz(B);
-
+	system("pause");
 	__asm {
 		jmp MenuPrincipal;
 	MostrarC:
 	}
+	system("cls");
 	cout << "Matriz Resultado" << endl;
 	imprimirMatriz(C);
+	system("pause");
 	__asm {
 		jmp MenuPrincipal;
 	reiniciarM:
 	}
+	system("cls");
 	iniciarMatrices();
 
 	__asm{
@@ -190,13 +195,7 @@ int main() {
 		cmp eax, 2;
 		je MenuPrincipal;
 		jmp ErrorLectura;
-
-	}
-
-	__asm {
-
 	menuResta:
-
 	}
 
 	cout << " -1 Realizar Operacion\n -2 Cancelar" << endl;
@@ -241,16 +240,15 @@ int main() {
 		jmp ErrorLectura;
 
 	sumar:
-
-		mov ecx, 0
-			inicioCicloS :
-			mov eax, A[ecx * type float];
+	inicioCicloS:
+		mov ecx, p;
+		mov eax, A[ecx * type float];
 		push eax;
 		mov eax, B[ecx * type float];
 		push eax;
 		call pSuma;
-		mov ecx, p
-			fstp C[ecx * type float];
+		mov ecx, p;
+		fstp C[ecx * type float];
 		pop eax;
 		pop eax;
 
@@ -261,16 +259,15 @@ int main() {
 		jmp terminar;
 
 	restar:
-
-		mov ecx, 0
-			inicioCicloR :
-			mov eax, A[ecx * type float];
+	inicioCicloR:
+		mov ecx, p;
+		mov eax, A[ecx * type float];
 		push eax;
 		mov eax, B[ecx * type float];
 		push eax;
 		call pResta;
-		mov ecx, p
-			fstp C[ecx * type float];
+		mov ecx, p;
+		fstp C[ecx * type float];
 		pop eax;
 		pop eax;
 
@@ -281,15 +278,14 @@ int main() {
 		jmp terminar;
 
 	multiplicar:
-
-		mov ecx, 0
 	inicioCicloM:
+		mov ecx, p;
 		mov eax, A[ecx * type float];
 		push eax;
 		mov eax, B[ecx * type float];
 		push eax;
 		call pMultiplicacion;
-		mov ecx, p
+		mov ecx, p;
 		fstp C[ecx * type float];
 		pop eax;
 		pop eax;
@@ -299,18 +295,17 @@ int main() {
 		jne inicioCicloM;
 		mov p, 0;
 		jmp terminar;
-
+	
 	dividir:
-
-		mov ecx, 0
-			inicioCicloD :
-			mov eax, A[ecx * type float];
+	inicioCicloD:
+		mov ecx, p;
+		mov eax, A[ecx * type float];
 		push eax;
 		mov eax, B[ecx * type float];
 		push eax;
 		call pDivision;
-		mov ecx, p
-			fstp C[ecx * type float];
+		mov ecx, p;
+		fstp C[ecx * type float];
 		pop eax;
 		pop eax;
 
