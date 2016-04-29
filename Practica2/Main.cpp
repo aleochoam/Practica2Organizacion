@@ -36,20 +36,20 @@ float pDivision(float a, float b) {
 	__asm {
 		fld b;
 		fld a; 
-		mov eax, b;
-		cmp eax, zero;
+		mov eax, a;
+		cmp eax, 0;
 		je Error;
 		fdiv;
 		fstp res;
 		fstp st(0);
 		jmp Bueno;
 	Error:
-		
 	}
+	//exit(-1);
 	cout << "Error. Division por cero, reinicie las matrices" << endl;
 	iniciarMatrices();
-	system("pause");
 	__asm {
+		//jmp MenuPrincipal;
 	Bueno:
 	}
 	return res;
@@ -175,9 +175,11 @@ int main() {
 	reiniciarM:
 	}
 	iniciarMatrices();
+
 	__asm{
-	menuSuma:
 		jmp MenuPrincipal;
+	menuSuma:
+		
 	}
 	cout << " -1 Realizar Operacion\n -2 Cancelar" << endl;
 	cin >> operacion;
