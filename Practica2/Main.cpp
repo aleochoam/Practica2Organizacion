@@ -46,13 +46,11 @@ float pDivision(float a, float b) {
 	Error:
 		
 	}
-	cout << "Error. Division por cero :o" << endl;
+	cout << "Error. Division por cero, reinicie las matrices" << endl;
+	iniciarMatrices();
 	system("pause");
-	exit(-1);
 	__asm {
-		
 	Bueno:
-
 	}
 	return res;
 }
@@ -102,6 +100,18 @@ void iniciarMatrices() {
 	}
 }
 
+void imprimirMatriz(float M[4][4]) {
+	int n = 4;
+
+	for (size_t i = 0; i < n; i++) {
+		for (size_t j = 0; j < n; j++) {
+			cout << M[i][j] << "\t ";
+		}
+		cout << endl;
+	}
+
+}
+
 
 
 int main() {
@@ -116,7 +126,7 @@ int main() {
 	}
 
 	cout << "Que operacion desea realizar?" << endl;
-	cout << " -1 Suma\n -2 Resta\n -3 Multiplicacion\n -4 Division\n -5 Mostrar Matriz A\n -6 Mostrar Matriz B\n -7 Mostrar Matriz Resultante\n -8 Cerrar el programa" << endl;
+	cout << " -1 Suma\n -2 Resta\n -3 Multiplicacion\n -4 Division\n -5 Mostrar Matriz A\n -6 Mostrar Matriz B\n -7 Mostrar Matriz Resultante\n -8 Reiniciar Matrices\n -9 Cerrar el programa" << endl;
 	cin >> operacion;
 	__asm{
 	
@@ -136,11 +146,14 @@ int main() {
 		cmp eax, 7;
 		je MostrarC;
 		cmp eax, 8;
+		je reiniciarM;
+		cmp eax, 9;
 		je salir;
 		jmp ErrorLectura;
 
 	MostrarA:
 	}
+	cout << "Matriz A" << endl;
 	imprimirMatriz(A);
 
 
@@ -148,17 +161,23 @@ int main() {
 		jmp MenuPrincipal;
 	MostrarB:
 	}
+	cout << "Matriz B" << endl;
 	imprimirMatriz(B);
 
 	__asm {
 		jmp MenuPrincipal;
 	MostrarC:
 	}
+	cout << "Matriz Resultado" << endl;
 	imprimirMatriz(C);
-	__asm{
+	__asm {
 		jmp MenuPrincipal;
+	reiniciarM:
+	}
+	iniciarMatrices();
+	__asm{
 	menuSuma:
-
+		jmp MenuPrincipal;
 	}
 	cout << " -1 Realizar Operacion\n -2 Cancelar" << endl;
 	cin >> operacion;
@@ -275,7 +294,7 @@ int main() {
 
 		inc p;
 		cmp ecx, m;
-		jne inicioCicloS;
+		jne inicioCicloM;
 		mov p, 0;
 		jmp terminar;
 
@@ -302,6 +321,8 @@ int main() {
 	ErrorLectura:
 	}
 	cout << "Error, no se reconoce" << endl;
+	cin.clear();
+	cin.ignore(1);
 	__asm{
 	terminar:
 		jmp MenuPrincipal;
@@ -309,18 +330,6 @@ int main() {
 	}
 	
 	return 0;
-}
-
-void imprimirMatriz(float M[4][4]) {
-	int n = 4;
-
-	for (size_t i = 0; i < n; i++) {
-		for (size_t j = 0; j < n; j++) {
-			cout << M[i][j] << "\t ";
-		}
-		cout << endl;
-	}
-
 }
 
 
